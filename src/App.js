@@ -12,6 +12,11 @@ function App() {
       <Router>
         <Routes>
           <Route to="/" element={<Explore/>} />
+          <Route to="/offers" element={<Offers/>} />
+          <Route to="/profile" element={<SignIn/>} />
+          <Route to="/sign-in" element={<SignIn/>} />
+          <Route to="/sign-up" element={<SignIn/>} />
+          <Route to="/forgot-password" element={<SignIn/>} />
         </Routes>
       </Router>
     </>
