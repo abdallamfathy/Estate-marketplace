@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg';
-import { visibilityIcon } from '../assets/svg/visibilityIcon.svg';
+import  visibilityIcon  from '../assets/svg/visibilityIcon.svg';
 import { Link , useNavigate } from 'react-router-dom'
 
 
@@ -13,10 +13,12 @@ const SignIn = () => {
   })
   const {email , password} = formData
   
-  const onChange = () => {
-    return true
+  const onChange = (e) => {
+    setformData( (prevState) =>({
+      ...prevState,
+      [e.target.id] : e.target.value
+    }))
   }
-
   const navigate = useNavigate();
 
   return (
@@ -27,9 +29,10 @@ const SignIn = () => {
           Welcome Back!
         </p>
       </header>
-      <main>
         <form>
           <input type="email" className="emailInput" placeholder='Email' id="email" value={email} onChange={onChange} />
+
+
           <div className="passwordInputDiv">
             <input
             className='passwordInput' type={showPassword ? "text" : "password"}
@@ -37,11 +40,30 @@ const SignIn = () => {
             placeholder='password'
             value={password}
             onChange={onChange} />
+          <img
+          className='showPassword'
+          src={visibilityIcon} alt="showpassowrd" onClick={()=>setShowPassword((prevState) => !prevState ) } />
           </div>
 
-          <img src={visibilityIcon} alt="showpassowrd" onClick={setShowPassword((prevState) => !prevState ) } />
+          <Link to="/forgot-password" className='forgotPasswordLink'>
+            Forgot Password
+          </Link>
+
+          <div className="signInBar">
+            <p className="signInText">
+              Sign In
+            </p>
+            <button className="signInButton">
+              <ArrowRightIcon fill='#ffffff' width="34px" height="34px"/>
+            </button>
+          </div>
         </form>
-      </main>
+
+        {/* Google Auth */}
+
+        <Link to="/sign-up" className='registerLink'>
+          Sign up Instead
+        </Link>
     </div>
     </>
   )
