@@ -1,4 +1,4 @@
-import { BrowserRouter as Router , Route , Routes } from 'react-router-dom'
+import { BrowserRouter as Router , Routes , Route } from 'react-router-dom'
 import Explore from './pages/Explore';
 import ForgotPassword from './pages/ForgotPassword';
 import Offers from "./pages/Offers";
@@ -11,12 +11,12 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route to="/" element={<Explore/>} />
-          <Route to="/offers" element={<Offers/>} />
-          <Route to="/profile" element={<SignIn/>} />
-          <Route to="/sign-in" element={<SignIn/>} />
-          <Route to="/sign-up" element={<SignIn/>} />
-          <Route to="/forgot-password" element={<SignIn/>} />
+          <Route path="/" element={<Explore />} />
+          <Route path="/offers" element={<Offers/>} />
+          <Route path="/profile" element={<SignIn/>} />
+          <Route path="/sign-in" element={<SignIn/>} />
+          <Route path="/sign-up" element={<SignUp/>} />
+          <Route path="/forgot-password" element={<ForgotPassword/>} />
         </Routes>
       </Router>
     </>
