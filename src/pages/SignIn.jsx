@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/keyboardArrowRightIcon.svg';
 import  visibilityIcon  from '../assets/svg/visibilityIcon.svg';
 import { Link , useNavigate } from 'react-router-dom'
+import {getAuth , signInWithEmailAndPassword} from "firebase/auth"
 
 
 const SignIn = () => {
@@ -19,6 +20,23 @@ const SignIn = () => {
       [e.target.id] : e.target.value
     }))
   }
+
+  const onSubmit = async(e) => {
+    e.preventDefault();
+    try {
+      const auth = getAuth()
+      const userCredential = await signInWithEmailAndPassword(auth , email , password)
+
+      if (userCredential.user) {
+        navigate("/") 
+      } else {
+        
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const navigate = useNavigate();
 
   return (
@@ -29,7 +47,7 @@ const SignIn = () => {
           Welcome Back!
         </p>
       </header>
-        <form>
+        <form onSubmit={onSubmit}>
           <input type="email" className="emailInput" placeholder='Email' id="email" value={email} onChange={onChange} />
 
 
