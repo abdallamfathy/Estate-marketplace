@@ -6,7 +6,7 @@ import { toast, ToastContainer } from 'react-toastify'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable, uploadString } from "firebase/storage";
 import {db} from "../firebase.config"
 import {v4 as uuidv4} from "uuid"
-
+import { addDoc , collection , serverTimestamp } from 'firebase/firestore'
 
 const CreateListing = () => {
 
@@ -152,9 +152,24 @@ uploadTask.on('state_changed',
           return 
         })
 
-        console.log(imgUrls);
+        
+        const formDataCopy = {
+          ...formData,
+          imgUrls,
+          geolocation,
+          timestamp: serverTimestamp()
+        }
+
+        delete formDataCopy.images
+        delete formDataCopy.address
+        location && (formDataCopy.location = location)
+        !formDataCopy.offer && delete formDataCopy.discountedPrice
+        const docRef = await addDoc(collection(db, "listings") , formDataCopy)
+
         setLoading(false)
 
+        toast.success("listing saved")
+        navigate("/category/${formDataCopy.type}/${docRef.id}")
     }
     const onMutate = (e) => {
         let boolean = null 
