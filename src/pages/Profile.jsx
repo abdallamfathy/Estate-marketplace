@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import {getAuth} from "firebase/auth"
 import { Link, useNavigate } from 'react-router-dom'
 import {db} from "../firebase.config"
-import { updateDoc,doc, collection, query, where, orderBy, getDoc, getDocs } from 'firebase/firestore'
+import { updateDoc,doc, collection, query, where, orderBy, getDoc, getDocs, deleteDoc } from 'firebase/firestore'
 import { updateProfile } from 'firebase/auth'
 import { toast } from 'react-toastify'
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg"
@@ -79,7 +79,14 @@ const Profile = () => {
     }))
   }
 
-  const onDelete = () => {}
+  const onDelete = async(listingId) => {
+    if (window.confirm("Are you sure you want to delete?")) {
+      await deleteDoc(doc(db,"listings",listingId))
+      const updatedListings = listing.filter((list)=> !list.id === listingId)
+      setListing(updatedListings)
+      toast.success("Successfule deleted listing")
+    }
+  }
 
   return (
     <div className="profile">
