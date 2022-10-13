@@ -7,7 +7,7 @@ import { updateProfile } from 'firebase/auth'
 import { toast } from 'react-toastify'
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg"
 import homeIcon from "../assets/svg/homeIcon.svg"
-
+import ListingItem from "../components/ListingItem"
 
 const Profile = () => {
   const [changeDetails , setChangeDetails] = useState(false);
@@ -79,6 +79,8 @@ const Profile = () => {
     }))
   }
 
+  const onDelete = () => {}
+
   return (
     <div className="profile">
       <header className='profileHeader'>
@@ -124,6 +126,18 @@ const Profile = () => {
       <p>Sell or rent your home</p>
       <img src={arrowRight} alt="arrow" />
     </Link>
+
+
+    {!loading && listing?.length > 0 && (
+      <>
+        <p className="listingText">Your Listings</p>
+        <ul className="listingsList">
+          {listing.map((list)=> (
+            <ListingItem key={list .id} listing={list .data} id={list.id} onDelete={()=> onDelete(list .id)}/>
+          ))}
+        </ul>
+      </>
+    )}
   </main>
 
     </div>
