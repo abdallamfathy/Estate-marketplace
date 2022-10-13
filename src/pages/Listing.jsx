@@ -6,7 +6,10 @@ import shareIcon from "../assets/svg/shareIcon.svg"
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
-
+import "swiper/swiper-bundle.css";
+import   SwiperCore , { Navigation, Pagination, Scrollbar,A11y } from "swiper"
+import { Swiper, SwiperSlide} from "swiper/react"
+SwiperCore.use([Navigation,Pagination,Scrollbar,A11y])
 
 const Listing = () => {
 
@@ -42,7 +45,20 @@ const Listing = () => {
 
   return (
     <main>
-        {/* SLIDER */}
+        
+        <Swiper className="swiper-container" slidesPerView={1} pagination={{ clickable: true }}>
+        {listing.imgUrls.map((url, index) => (
+          <SwiperSlide key={index}>
+            <div
+              style={{
+                background: `url(${listing.imgUrls[index]}) center no-repeat`,
+                backgroundSize: 'cover',
+              }}
+              className='swiperSlideDiv'
+            ></div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
         <div className="shareIconDiv" onClick={()=> {
             navigator.clipboard.writeText(window.location.href)
