@@ -169,7 +169,7 @@ uploadTask.on('state_changed',
         setLoading(false)
 
         toast.success("listing saved")
-        navigate("/category/${formDataCopy.type}/${docRef.id}")
+        navigate(`/category/${formDataCopy.type}/${docRef.id}`)
     }
     const onMutate = (e) => {
         let boolean = null 
