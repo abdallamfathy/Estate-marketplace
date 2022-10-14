@@ -37,6 +37,10 @@ const Slider = () => {
     if (Loading) {
         return <Spinner/>
     }
+
+    if (listings.length === 0) {
+        return <></>
+    }
   return listings && <>
     <p className="exploreHeading">Recommended</p>
     <Swiper className="swiper-container" slidesPerView={1} pagination={{clickable:true}}>
