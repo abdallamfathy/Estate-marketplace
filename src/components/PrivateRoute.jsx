@@ -9,7 +9,6 @@ const PrivateRoute = () => {
     if (checkStatus) {
         return <Spinner/>
     }
-    console.log(loggedIn);
     return loggedIn ? <Outlet/> : <Navigate to="/sign-in"/>
 }
 

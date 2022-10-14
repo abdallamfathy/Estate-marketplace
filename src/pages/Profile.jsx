@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import {getAuth} from "firebase/auth"
 import { Link, useNavigate } from 'react-router-dom'
 import {db} from "../firebase.config"
-import { updateDoc,doc, collection, query, where, orderBy, getDoc, getDocs, deleteDoc } from 'firebase/firestore'
+import { updateDoc,doc, collection, query, where, orderBy, getDocs, deleteDoc } from 'firebase/firestore'
 import { updateProfile } from 'firebase/auth'
 import { toast } from 'react-toastify'
 import arrowRight from "../assets/svg/keyboardArrowRightIcon.svg"
@@ -33,7 +33,6 @@ const Profile = () => {
       const querySnap = await getDocs(q);
       let listing = []
 
-      console.log(listing);
       querySnap.forEach((doc) => {
         return listing.push({
           id:doc.id,

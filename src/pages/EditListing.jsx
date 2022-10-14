@@ -107,7 +107,7 @@ const EditListing = () => {
         setLoading(true)
         // if (discountedPrice >= regularPrice) {
         //     setLoading(false)
-        //     toast.error("Discounted price needs to be less than regular price")
+        //     toast.error("Discounted price needs to be less than regular pric")
         //     return
         // }
         if (images.length > 6) {

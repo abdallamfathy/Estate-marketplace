@@ -1,5 +1,5 @@
 import "swiper/swiper-bundle.css";
-import   SwiperCore , { Navigation, Pagination, Scrollbar,A11y } from "swiper"
+import   SwiperCore , {EffectFade,Autoplay,Navigation, Pagination, Scrollbar,A11y } from "swiper"
 import { Swiper, SwiperSlide} from "swiper/react"
 import Spinner from "./Spinner";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,8 @@ import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { db } from "../firebase.config";
 
 
-SwiperCore.use([Navigation,Pagination,Scrollbar,A11y])
+
+SwiperCore.use([Navigation,Pagination,Autoplay,Scrollbar,A11y,EffectFade])
 const Slider = () => {
     const [Loading, setLoading] = useState(true)
     const [listings, setListings] = useState(null)
@@ -43,7 +44,11 @@ const Slider = () => {
     }
   return listings && <>
     <p className="exploreHeading">Recommended</p>
-    <Swiper className="swiper-container" slidesPerView={1} pagination={{clickable:true}}>
+    <Swiper 
+  modules={[EffectFade]} effect="fade"
+ autoplay={{
+   delay: 2000,
+ }} className="swiper-container" slidesPerView={1} pagination={{clickable:true}}>
     {listings.map(({data,id})=>(
         <SwiperSlide key={id} onClick={()=> navigate(`/category/${data.type}/${id}`)}>
             <div style={{background: `url(${data.imgUrls[0]}) center no-repeat`,

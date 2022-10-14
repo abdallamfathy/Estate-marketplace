@@ -69,11 +69,11 @@ const CreateListing = () => {
     const onSubmit = async(e) => {
         e.preventDefault()
         setLoading(true)
-        // if (discountedPrice >= regularPrice) {
-        //     setLoading(false)
-        //     toast.error("Discounted price needs to be less than regular price")
-        //     return
-        // }
+        if (discountedPrice >= regularPrice) {
+          setLoading(false)
+          toast.error("Discounted price needs to be less than regular price")
+          return
+      }
         if (images.length > 6) {
             setLoading(false)
             toast.error("Max 6 images")
@@ -171,6 +171,7 @@ uploadTask.on('state_changed',
         toast.success("listing saved")
         navigate(`/category/${formDataCopy.type}/${docRef.id}`)
     }
+
     const onMutate = (e) => {
         let boolean = null 
         if(e.target.value === "true"){
@@ -187,6 +188,7 @@ uploadTask.on('state_changed',
                 images:e.target.files
             }) )
         }
+        // Text/Booleans/Numbers
         if (!e.target.files) {
             setFormData((prevState)=>({
                 ...prevState,
@@ -194,7 +196,6 @@ uploadTask.on('state_changed',
             }) )
         }
         
-        // Text/Booleans/Numbers
     }
 
     if (loading) {
