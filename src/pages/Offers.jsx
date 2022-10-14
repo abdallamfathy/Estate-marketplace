@@ -10,6 +10,8 @@ const Offers = () => {
     
     const [listings , setListings] = useState(null)
     const [loading , setLoading] = useState(true)
+    const [lastFetched , setLastFetched] = useState(null)
+
 
     const params = useParams()
     useEffect(() => {
@@ -23,6 +25,9 @@ const Offers = () => {
 
             // Execute query
             const querySnap = await getDocs(q)
+
+            const lastVisible = querySnap.docs[querySnap.docs.length-1]
+            setLastFetched(lastVisible)
 
             const listings = []
             querySnap.forEach((doc)=> {
@@ -43,6 +48,38 @@ const Offers = () => {
     
     }, [])
     
+
+     // Pagination / Load More
+     const onFetchMoreListings = async () => {
+        try {
+            // Get Refrence
+            const listingsRef = collection(db , "listings")
+
+            // create a query
+            const q = query(listingsRef , where("offer", "==" , true), orderBy("timestamp" , "desc") , startAfter(lastFetched),  limit(10))
+
+            // Execute query
+            const querySnap = await getDocs(q)
+
+            const lastVisible = querySnap.docs[querySnap.docs.length-1]
+            setLastFetched(lastVisible)
+
+            const listings = []
+            querySnap.forEach((doc)=> {
+                console.log(doc.data());
+                return listings.push({
+                    id: doc.id,
+                    data: doc.data()
+                })
+            })
+
+            setListings((prevState) => [...prevState,...listings])
+            setLoading(false)
+        } catch (error) {
+            toast.error("could not fetch listings")
+        }
+    }
+    
     
   return (
     <div className="category">
@@ -59,6 +96,13 @@ const Offers = () => {
                 ))}
             </ul>
         </main>
+
+        <br />
+        <br />
+        {lastFetched && (
+            <p className="loadMore" onClick={onFetchMoreListings}>Load More</p>
+        )}
+        
         </>) :( <p>There are no current offers </p>)}
     </div>
   )
